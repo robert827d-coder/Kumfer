@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fort Wayne Service Directory - GitHub Edition</title>
+    <link rel="stylesheet" href="style-1.css">
+</head>
+<body>
+    <!-- Admin Toggle Button -->
+    <button id="adminToggle" class="admin-toggle btn btn--outline">Admin Mode</button>
+
+    <!-- Admin Password Modal -->
+    <div id="passwordModal" class="modal hidden">
+        <div class="modal__content">
+            <h3>Admin Access</h3>
+            <div class="form-group">
+                <label for="adminPassword" class="form-label">Enter admin password:</label>
+                <input type="password" id="adminPassword" class="form-control" placeholder="Password">
+            </div>
+            <div class="modal__actions">
+                <button id="passwordSubmit" class="btn btn--primary">Access Admin</button>
+                <button id="passwordCancel" class="btn btn--secondary">Cancel</button>
+            </div>
+            <div id="passwordError" class="password-error hidden">
+                Incorrect password. Please try again.
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header__content">
+                <div class="header__branding">
+                    <h1 class="header__name">Michael Kumfer</h1>
+                    <p class="header__company">EXP Realty</p>
+                </div>
+                <div class="header__contact">
+                    <a href="https://Kumfer.Me" target="_blank" class="header__website">Kumfer.Me</a>
+                    <a href="tel:2603541216" class="header__phone">(260) 354-1216</a>
+                </div>
+            </div>
+            <div class="header__title">
+                <h2>Fort Wayne & Huntertown Service Directory</h2>
+                <p class="header__tagline">Your trusted guide to quality local service providers</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Controls Section -->
+    <section id="adminControls" class="admin-controls hidden">
+        <div class="container">
+            <div class="admin-controls__content">
+                <h3>Admin Controls - GitHub Integration</h3>
+                <div class="admin-controls__buttons">
+                    <button id="addProviderBtn" class="btn btn--primary">Add Provider (GitHub)</button>
+                    <button id="refreshDataBtn" class="btn btn--secondary">Refresh Data</button>
+                    <button id="exportDataBtn" class="btn btn--secondary">Export Current Data</button>
+                    <div class="data-status">
+                        <small id="lastUpdated" class="text-muted">Loading...</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GitHub Status Bar -->
+    <div id="dataStatus" class="data-status-bar">
+        <div class="container">
+            <div class="status-content">
+                <span class="status-indicator">📡</span>
+                <span class="status-text">Data synced with GitHub</span>
+                <span id="footerLastUpdated" class="status-time">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search & Filter Section -->
+    <section class="search-filter">
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" 
+                       id="searchInput" 
+                       class="form-control" 
+                       placeholder="Search by company name, service type, or contact..."
+                       autocomplete="off">
+            </div>
+            <div class="filter-buttons">
+                <button class="btn btn--secondary filter-btn active" data-category="all">Show All</button>
+                <button class="btn btn--secondary filter-btn" data-category="Home Inspector">Home Inspector</button>
+                <button class="btn btn--secondary filter-btn" data-category="Mortgage Lender">Mortgage Lender</button>
+                <button class="btn btn--secondary filter-btn" data-category="Title Company">Title Company</button>
+                <button class="btn btn--secondary filter-btn" data-category="Financial Services">Financial Services</button>
+                <button class="btn btn--secondary filter-btn" data-category="Banking">Banking</button>
+                <button class="btn btn--secondary filter-btn" data-category="Plumbing">Plumbing</button>
+                <button class="btn btn--secondary filter-btn" data-category="HVAC">HVAC</button>
+                <button class="btn btn--secondary filter-btn" data-category="Roofing">Roofing</button>
+                <button class="btn btn--secondary filter-btn" data-category="Landscaping">Landscaping</button>
+                <button class="btn btn--secondary filter-btn" data-category="Home Services">Home Services</button>
+                <button class="btn btn--secondary filter-btn" data-category="Environmental Services">Environmental Services</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Providers Section -->
+    <main class="providers">
+        <div class="container">
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state">
+                <div class="loading-content">
+                    <div class="loading-spinner"></div>
+                    <h3>Loading Provider Data</h3>
+                    <p>Fetching the latest information from GitHub...</p>
+                </div>
+            </div>
+
+            <!-- Providers Grid -->
+            <div class="providers__grid" id="providersGrid">
+                <!-- Provider cards will be dynamically inserted here -->
+            </div>
+
+            <!-- No Results Message -->
+            <div class="no-results" id="noResults" style="display: none;">
+                <div class="no-results-content">
+                    <h3>No providers found</h3>
+                    <p>Try adjusting your search terms or category filter.</p>
+                    <button class="btn btn--outline" onclick="clearAllFilters()">Clear All Filters</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__branding">
+                    <h3>Michael Kumfer</h3>
+                    <p>Your Trusted Fort Wayne Realtor</p>
+                </div>
+                <div class="footer__contact">
+                    <p><a href="https://kumfer.me" target="_blank">Visit Kumfer.Me</a></p>
+                    <p><a href="tel:2603541216">(260) 354-1216</a></p>
+                </div>
+                <div class="footer__github">
+                    <h4>Data Source</h4>
+                    <p><small>Provider data synced from GitHub CSV</small></p>
+                    <p><small>Real-time updates • No cache clearing needed</small></p>
+                </div>
+            </div>
+            <div class="footer__disclaimer">
+                <p>&copy; 2025 Michael Kumfer - EXP Realty. Provider information is updated in real-time from GitHub. 
+                Please verify licensing and insurance before hiring any service provider. 
+                This directory is a free resource for the Fort Wayne and Huntertown community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Load the new GitHub-integrated application -->
+    <script src="new-app.js"></script>
+
+    <style>
+        /* Additional styles for GitHub integration features */
+        .data-status-bar {
+            background: var(--color-bg-3);
+            border-bottom: 1px solid var(--color-border);
+            padding: var(--space-8) 0;
+            font-size: var(--font-size-sm);
+        }
+
+        .status-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-8);
+            color: var(--color-text-secondary);
+        }
+
+        .status-indicator {
+            font-size: var(--font-size-base);
+        }
+
+        .loading-state {
+            display: none;
+            text-align: center;
+            padding: var(--space-32);
+        }
+
+        .loading-content {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--color-border);
+            border-top: 4px solid var(--color-primary);
+            border-radius: 50%;
+            margin: 0 auto var(--space-24);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-results-content {
+            text-align: center;
+            padding: var(--space-32);
+        }
+
+        .no-results-content h3 {
+            margin-bottom: var(--space-16);
+            color: var(--color-text-secondary);
+        }
+
+        .no-results-content p {
+            margin-bottom: var(--space-24);
+            color: var(--color-text-secondary);
+        }
+
+        .github-instructions {
+            line-height: 1.6;
+        }
+
+        .github-instructions h4 {
+            color: var(--color-primary);
+            margin-bottom: var(--space-16);
+        }
+
+        .github-instructions ol {
+            margin: var(--space-16) 0;
+            padding-left: var(--space-24);
+        }
+
+        .github-instructions li {
+            margin-bottom: var(--space-8);
+        }
+
+        .github-instructions code {
+            background: var(--color-secondary);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+        }
+
+        .github-instructions a {
+            color: var(--color-primary);
+            font-weight: var(--font-weight-medium);
+        }
+
+        .csv-format-help {
+            background: var(--color-bg-1);
+            padding: var(--space-12);
+            border-radius: var(--radius-base);
+            margin-top: var(--space-16);
+            border-left: 3px solid var(--color-primary);
+        }
+
+        .warning {
+            background: rgba(var(--color-warning-rgb), 0.1);
+            color: var(--color-warning);
+            padding: var(--space-12);
+            border-radius: var(--radius-base);
+            margin-top: var(--space-16);
+            border-left: 3px solid var(--color-warning);
+        }
+
+        .footer__github {
+            text-align: center;
+        }
+
+        .footer__github h4 {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--space-8);
+            color: var(--color-brand-primary);
+        }
+
+        /* Admin card controls styling */
+        .admin-card-controls {
+            margin-top: var(--space-12);
+            padding-top: var(--space-12);
+            border-top: 1px solid var(--color-card-border-inner);
+            display: flex;
+            gap: var(--space-8);
+        }
+
+        .btn--edit {
+            background: var(--color-info);
+            color: white;
+            font-size: var(--font-size-xs);
+            padding: var(--space-4) var(--space-8);
+        }
+
+        .btn--delete {
+            background: var(--color-error);
+            color: white;
+            font-size: var(--font-size-xs);
+            padding: var(--space-4) var(--space-8);
+        }
+
+        .btn--edit:hover,
+        .btn--delete:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .status-content {
+                flex-direction: column;
+                gap: var(--space-4);
+                text-align: center;
+            }
+
+            .admin-controls__buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .admin-controls__buttons .btn {
+                width: 100%;
+            }
+
+            .footer__content {
+                flex-direction: column;
+                gap: var(--space-16);
+                text-align: center;
+            }
+
+            .admin-card-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <script>
+        // Global utility functions
+        window.clearAllFilters = function() {
+            document.getElementById('searchInput').value = '';
+            
+            // Reset filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.filter-btn[data-category="all"]').classList.add('active');
+            
+            // Reset app state if available
+            if (window.appState) {
+                window.appState.setSearchTerm('');
+                window.appState.setCategory('all');
+                window.uiManager.renderProviders(window.appState.getFilteredProviders());
+            }
+        };
+
+        // Handle initial loading state
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingState = document.getElementById('loadingState');
+            const providersGrid = document.getElementById('providersGrid');
+            
+            if (loadingState && providersGrid) {
+                loadingState.style.display = 'block';
+                providersGrid.style.display = 'none';
+                
+                // Hide loading state after app initializes
+                setTimeout(() => {
+                    loadingState.style.display = 'none';
+                    providersGrid.style.display = 'grid';
+                }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
