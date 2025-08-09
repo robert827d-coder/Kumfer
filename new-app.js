@@ -7,7 +7,7 @@
 // Configuration - UPDATE THESE URLS FOR YOUR GITHUB REPO
 const CONFIG = {
     // Replace with your actual GitHub repository CSV URL
-    GITHUB_CSV_URL: 'https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/providers.csv',
+    GITHUB_CSV_URL: 'https://github.com/robert827d-coder/Kumfer/blob/main/providers.csv,
     CACHE_TIMEOUT: 5 * 60 * 1000, // 5 minutes
     RETRY_ATTEMPTS: 3,
     RETRY_DELAY: 1000,
