@@ -11,7 +11,7 @@ const CONFIG = {
     CACHE_TIMEOUT: 5 * 60 * 1000, // 5 minutes
     RETRY_ATTEMPTS: 3,
     RETRY_DELAY: 1000,
-    ADMIN_PASSWORD: 'michael2025', // Change this!
+    ADMIN_PASSWORD: 'Poopypants1!', //
     AUTO_REFRESH_INTERVAL: 10 * 60 * 1000 // 10 minutes
 };
 
